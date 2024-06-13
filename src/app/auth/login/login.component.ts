@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticateModel } from '../../models/authenticate.model';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   authForm!: FormGroup;
   credentials: AuthenticateModel = new AuthenticateModel();
 
-  constructor(private fb: FormBuilder){}
+  constructor(private fb: FormBuilder, private authService: AuthService){}
 
   ngOnInit(): void {
       this.onCreateForm();
@@ -27,6 +27,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitForm(): void {
-    console.log(this.authForm.value);
+    let credentials: AuthenticateModel = new AuthenticateModel();
+    credentials = this.authForm.value as AuthenticateModel;
+    console.log(credentials);
+    this.authService.authenticatedUser(credentials)
+      .subscribe({
+        next: (response: any) => {console.log("Response authenticated: " ,response);},
+        error: (err: any) => {console.log("resp error: ", err);}
+    });
   }
 }
