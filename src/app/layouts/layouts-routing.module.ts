@@ -11,6 +11,14 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
+      },
+      {
+        path: 'demandes',
+        loadChildren: () => import('../features/demandes/demandes.module').then(d => d.DemandesModule)
+      },
+      {
+        path: 'agents',
+        loadChildren: () => import('../features/agents/agents.module').then(d => d.AgentsModule)
       }
     ]
   }
