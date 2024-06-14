@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticateModel } from '../../models/authenticate.model';
 import { AuthService } from '../auth.service';
+import { TokenModel } from '../../models/token.model';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,10 @@ export class LoginComponent implements OnInit {
     console.log(credentials);
     this.authService.authenticatedUser(credentials)
       .subscribe({
-        next: (response: any) => {console.log("Response authenticated: " ,response);},
+        next: (response: TokenModel) => {
+          console.log("Response authenticated: " ,response);
+          this.authService.saveToken(response.id_token);
+        },
         error: (err: any) => {console.log("resp error: ", err);}
     });
   }
