@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Demande } from '../../models/demande.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class DemandesService {
   constructor(private httpClient: HttpClient) { }
 
 
-  getListDemandes(): Observable<any> {
-    return this.httpClient.get<any>(`${this.API_URL}/api/demandes`);
+  getListDemandes(): Observable<Demande[]> {
+    return this.httpClient.get<Demande[]>(`${this.API_URL}/api/demandes`);
   }
 }
