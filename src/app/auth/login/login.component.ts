@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticateModel } from '../../models/authenticate.model';
 import { AuthService } from '../auth.service';
 import { TokenModel } from '../../models/token.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   authForm!: FormGroup;
   credentials: AuthenticateModel = new AuthenticateModel();
 
-  constructor(private fb: FormBuilder, private authService: AuthService){}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router){}
 
   ngOnInit(): void {
       this.onCreateForm();
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
         next: (response: TokenModel) => {
           console.log("Response authenticated: " ,response);
           this.authService.saveToken(response.id_token);
+          this.router.navigate(["pages"])
         },
         error: (err: any) => {console.log("resp error: ", err);}
     });
